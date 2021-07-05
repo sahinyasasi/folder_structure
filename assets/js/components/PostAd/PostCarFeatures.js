@@ -15,7 +15,7 @@ import {
 import FormCheckBox from "../layouts/FormCheckBox";
 import PostHeader from "./PostHeader";
 import GridItem from "../layouts/GridItem";
-
+import { postAdActions } from "../../actions";
 const useStyles = makeStyles((theme) => ({
   root: {},
   cardContent: {},
@@ -84,7 +84,14 @@ const PostCarFeatures = () => {
         .replace(/([A-Z])/g, " $1")
         .trim();
 
-    return <FormCheckBox title={title} name={props.name} {...props} />;
+    return (
+      <FormCheckBox
+        title={title}
+        name={props.name}
+        {...props}
+        onChange={handleChange}
+      />
+    );
   };
   const Label = (props) => {
     return (
@@ -92,6 +99,14 @@ const PostCarFeatures = () => {
         {<Typography variant="subtitle2">{props.text}</Typography>}
       </FormLabel>
     );
+  };
+
+  const handleChange = (event) => {
+    setCarFeatures({
+      ...carFeatures,
+      [event.target.name]: event.target.checked,
+    });
+    //console.log(carFeatures);
   };
 
   const title = "Select Your Car Features";
@@ -112,13 +127,28 @@ const PostCarFeatures = () => {
                   >
                     <Label text="Comfort" />
                     <FormGroup>
-                      <Check name="acFront" />
-                      <Check name="acRear" />
-                      <Check name="backupCamera" />
-                      <Check name="cruiseControl" />
-                      <Check name="navigation" />
-                      <Check name="powerLocks" />
-                      <Check name="powerSteering" />
+                      <Check name="acFront" checked={carFeatures.acFront} />
+                      <Check name="acRear" checked={carFeatures.acRear} />
+                      <Check
+                        name="backupCamera"
+                        checked={carFeatures.backupCamera}
+                      />
+                      <Check
+                        name="cruiseControl"
+                        checked={carFeatures.cruiseControl}
+                      />
+                      <Check
+                        name="navigation"
+                        checked={carFeatures.navigation}
+                      />
+                      <Check
+                        name="powerLocks"
+                        checked={carFeatures.powerLocks}
+                      />
+                      <Check
+                        name="powerSteering"
+                        checked={carFeatures.powerSteering}
+                      />
                     </FormGroup>
                   </FormControl>
                 }
@@ -132,12 +162,21 @@ const PostCarFeatures = () => {
                   >
                     <Label text="Entertainment" />
                     <FormGroup>
-                      <Check name="amFmSterio" />
-                      <Check name="cdPlayer" />
-                      <Check name="dvdSystem" />
-                      <Check name="mp3Player" />
-                      <Check name="portableAudio" />
-                      <Check name="premiumAudio" />
+                      <Check
+                        name="amFmSterio"
+                        checked={carFeatures.amFmSterio}
+                      />
+                      <Check name="cdPlayer" checked={carFeatures.cdPlayer} />
+                      <Check name="dvdSystem" checked={carFeatures.dvdSystem} />
+                      <Check name="mp3Player" checked={carFeatures.mp3Player} />
+                      <Check
+                        name="portableAudio"
+                        checked={carFeatures.portableAudio}
+                      />
+                      <Check
+                        name="premiumAudio"
+                        checked={carFeatures.premiumAudio}
+                      />
                     </FormGroup>
                   </FormControl>
                 }
@@ -153,13 +192,25 @@ const PostCarFeatures = () => {
                       {<Typography variant="subtitle2">Safety</Typography>}
                     </FormLabel>
                     <FormGroup>
-                      <Check name="airbagDriver" />
-                      <Check name="airbagPassenger" />
-                      <Check name="antilockBrakes" />
-                      <Check name="bluetooth" />
-                      <Check name="handsFree" />
-                      <Check name="fogLights" />
-                      <Check name="securitySystem" />
+                      <Check
+                        name="airbagDriver"
+                        checked={carFeatures.airbagDriver}
+                      />
+                      <Check
+                        name="airbagPassenger"
+                        checked={carFeatures.airbagPassenger}
+                      />
+                      <Check
+                        name="antilockBrakes"
+                        checked={carFeatures.antilockBrakes}
+                      />
+                      <Check name="bluetooth" checked={carFeatures.bluetooth} />
+                      <Check name="handsFree" checked={carFeatures.handsFree} />
+                      <Check name="fogLights" checked={carFeatures.fogLights} />
+                      <Check
+                        name="securitySystem"
+                        checked={carFeatures.securitySystem}
+                      />
                     </FormGroup>
                   </FormControl>
                 }
@@ -173,12 +224,30 @@ const PostCarFeatures = () => {
                   >
                     <Label text="Seats" />
                     <FormGroup>
-                      <Check name="bucketSeats" />
-                      <Check name="heatedSeats" />
-                      <Check name="leatherInterior" />
-                      <Check name="memorySeats" />
-                      <Check name="powerSeats" />
-                      <Check name="thirdRowSeats" />
+                      <Check
+                        name="bucketSeats"
+                        checked={carFeatures.bucketSeats}
+                      />
+                      <Check
+                        name="heatedSeats"
+                        checked={carFeatures.heatedSeats}
+                      />
+                      <Check
+                        name="leatherInterior"
+                        checked={carFeatures.leatherInterior}
+                      />
+                      <Check
+                        name="memorySeats"
+                        checked={carFeatures.memorySeats}
+                      />
+                      <Check
+                        name="powerSeats"
+                        checked={carFeatures.powerSeats}
+                      />
+                      <Check
+                        name="thirdRowSeats"
+                        checked={carFeatures.thirdRowSeats}
+                      />
                     </FormGroup>
                   </FormControl>
                 }
@@ -192,11 +261,23 @@ const PostCarFeatures = () => {
                   >
                     <Label text="Windows" />
                     <FormGroup>
-                      <Check name="powerWindows" />
-                      <Check name="windowsDefroster" />
-                      <Check name="rearWindow" />
-                      <Check name="wiperTintedGlass" />
-                      <Check name="sunroof" />
+                      <Check
+                        name="powerWindows"
+                        checked={carFeatures.powerWindows}
+                      />
+                      <Check
+                        name="windowsDefroster"
+                        checked={carFeatures.windowsDefroster}
+                      />
+                      <Check
+                        name="rearWindow"
+                        checked={carFeatures.rearWindow}
+                      />
+                      <Check
+                        name="wiperTintedGlass"
+                        checked={carFeatures.wiperTintedGlass}
+                      />
+                      <Check name="sunroof" checked={carFeatures.sunroof} />
                     </FormGroup>
                   </FormControl>
                 }
@@ -210,10 +291,22 @@ const PostCarFeatures = () => {
                   >
                     <Label text="Others" />
                     <FormGroup>
-                      <Check name="alloyWheels" />
-                      <Check name="keylessEntry" />
-                      <Check name="towPackage" />
-                      <Check name="trailerHitch" />
+                      <Check
+                        name="alloyWheels"
+                        checked={carFeatures.alloyWheels}
+                      />
+                      <Check
+                        name="keylessEntry"
+                        checked={carFeatures.keylessEntry}
+                      />
+                      <Check
+                        name="towPackage"
+                        checked={carFeatures.towPackage}
+                      />
+                      <Check
+                        name="trailerHitch"
+                        checked={carFeatures.trailerHitch}
+                      />
                     </FormGroup>
                   </FormControl>
                 }
