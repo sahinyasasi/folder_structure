@@ -66,67 +66,41 @@ const Register = () => {
     console.log("(handleSubmit)========================== ", registerDetails);
     dispatch(userActions.register({ user: registerDetails }, "/dashboard"));
   };
+  const textStyle = (name) => {
+    return name[0].toUpperCase() + name.slice(1).replace("_", " ").trim();
+  };
+
   return (
     <div className={classes.root} title="Register">
       <Container className={classes.cardContainer} maxWidth="sm">
         <Box mt={4} display="flex" justifyContent="center">
-          {/* <RouterLink to="/login"> */}
           <Typography color="textPrimary" gutterBottom variant="h5">
             Register a new user
           </Typography>
-
-          {/* </RouterLink> */}
         </Box>
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
             <Box flexGrow={1} mt={2}>
               <form onSubmit={handleSubmit} noValidate>
-                <FormInput
-                  label="First Name"
-                  value={registerDetails.first_name}
-                  fullWidth
-                  autoFocus
-                  required
-                  onChange={(e) =>
-                    handleChange("first_name", { value: e.target.value })
+                {["first_name", "last_name", "login_id", "email", "phone"].map(
+                  (data) => {
+                    return (
+                      <FormInput
+                        id={data}
+                        key={data}
+                        label={textStyle(data)}
+                        value={registerDetails[data]}
+                        fullWidth
+                        required
+                        onChange={(e) => {
+                          handleChange(data, { value: e.target.value });
+                          // console.log(registerDetails);
+                        }}
+                      />
+                    );
                   }
-                />
-                <FormInput
-                  label="Last Name"
-                  value={registerDetails.last_name}
-                  fullWidth
-                  required
-                  onChange={(e) =>
-                    handleChange("last_name", { value: e.target.value })
-                  }
-                />
-                <FormInput
-                  label="Email"
-                  value={registerDetails.email}
-                  fullWidth
-                  required
-                  onChange={(e) =>
-                    handleChange("email", { value: e.target.value })
-                  }
-                />
-                <FormInput
-                  label="LoginId"
-                  value={registerDetails.login_id}
-                  fullWidth
-                  required
-                  onChange={(e) =>
-                    handleChange("login_id", { value: e.target.value })
-                  }
-                />
-                <FormInput
-                  label="Phone"
-                  value={registerDetails.phone}
-                  fullWidth
-                  required
-                  onChange={(e) =>
-                    handleChange("phone", { value: e.target.value })
-                  }
-                />
+                )}
+
                 <Password
                   value={registerDetails.password}
                   onChange={(e) =>
@@ -135,8 +109,6 @@ const Register = () => {
                 />
                 <Box mt={6}>
                   <CustomButton
-                    // color="secondary"
-                    //   disabled={isSubmitting}
                     fullWidth
                     size="small"
                     type="submit"
