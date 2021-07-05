@@ -6,6 +6,7 @@ import {
   Typography,
   makeStyles,
   Container,
+  InputAdornment,
 } from "@material-ui/core";
 import GridItem from "../layouts/GridItem";
 import PostHeader from "./PostHeader";
@@ -28,6 +29,22 @@ const PostAskingPrice = () => {
   const classes = useStyles();
   const [askingPrice, setAskingPrice] = useState(valObj);
 
+  const handleChange = (val) => {
+    if (val) {
+      setAskingPrice({
+        ...valObj,
+        value: val,
+      });
+    } else {
+      setAskingPrice({
+        ...valObj,
+        error: true,
+        errorText: mandatoryText,
+      });
+    }
+    //console.log(askingPrice);
+  };
+
   const title = "Enter Asking Price";
   return (
     <Container className={classes.cardGrid} maxWidth="lg">
@@ -38,7 +55,18 @@ const PostAskingPrice = () => {
             <GridItem
               size={[12, 6, 4]}
               componentToPassDown={
-                <FormInput label="Asking Price" required fullWidth />
+                <FormInput
+                  label="Asking Price"
+                  required
+                  fullWidth
+                  onChange={(e) => handleChange(e.target.value)}
+                  value={askingPrice.value}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">Rs</InputAdornment>
+                    ),
+                  }}
+                />
               }
             />
             <GridItem
