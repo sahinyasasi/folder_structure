@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
+const mandatoryText = " field cannot be empty";
 const valObj = {
   value: "",
   error: false,
@@ -44,7 +44,43 @@ const PostSellerDetails = () => {
     seller_notes: valObj,
   });
 
-  const Input = (props) => {
+  const updateValObjWithVal = (data) => {
+    if (data && data.value) {
+      return {
+        ...valObj,
+        value: data.value,
+      };
+    } else {
+      return {
+        ...valObj,
+        value: "",
+      };
+    }
+  };
+
+  const updateValObjWithError = (errorText) => {
+    return {
+      ...valObj,
+      value: "",
+      error: true,
+      errorText: errorText,
+    };
+  };
+  const handleChange = (key, data) => {
+    let newData = "";
+    if (data && data.value) {
+      newData = updateValObjWithVal(data);
+    } else {
+      newData = updateValObjWithError(`${key} ${mandatoryText}!`);
+    }
+
+    setSellerDetails({
+      ...sellerDetails,
+      [key]: newData,
+    });
+  };
+
+  /* const Input = (props) => {
     return (
       <FormInput
         fullWidth
@@ -53,7 +89,7 @@ const PostSellerDetails = () => {
         {...props}
       />
     );
-  };
+  };*/
   const title = "Enter Seller Details and Notes";
   return (
     <Container className={classes.cardGrid} maxWidth="lg">
@@ -64,25 +100,62 @@ const PostSellerDetails = () => {
           <Grid container spacing={3}>
             <GridItem
               size={[12, 6, 4]}
-              componentToPassDown={<Input title="Name" />}
+              componentToPassDown={
+                <FormInput
+                  fullWidth
+                  required
+                  label="Seller's Name"
+                  value={sellerDetails.name.value}
+                  onChange={(e) =>
+                    handleChange("name", { value: e.target.value })
+                  }
+                />
+              }
             />
 
             <GridItem
               size={[12, 6, 4]}
-              componentToPassDown={<Input title="Phone" />}
+              componentToPassDown={
+                <FormInput
+                  fullWidth
+                  required
+                  label="Seller's Phone"
+                  value={sellerDetails.phone_number.value}
+                  onChange={(e) =>
+                    handleChange("phone_number", { value: e.target.value })
+                  }
+                />
+              }
             />
             <GridItem
               size={[12, 6, 4]}
-              componentToPassDown={<Input title="Email" />}
+              componentToPassDown={
+                <FormInput
+                  fullWidth
+                  required
+                  label="Seller's Email"
+                  value={sellerDetails.email.value}
+                  onChange={(e) => {
+                    handleChange("email", { value: e.target.value });
+                    console.log(e.target.value);
+                  }}
+                />
+              }
             />
           </Grid>
           <GridItem
             size={[12]}
             componentToPassDown={
-              <Input
+              <FormInput
+                fullWidth
+                required
+                label="Seller's Additional Notes about your Vehicle - ex: Excellent condition, No accidents, Must see"
                 multiline
                 rows={5}
-                title="Additional Notes about your Vehicle - ex: Excellent condition, No accidents, Must see"
+                value={sellerDetails.seller_notes.value}
+                onChange={(e) =>
+                  handleChange("seller_notes", { value: e.target.value })
+                }
               />
             }
           />
