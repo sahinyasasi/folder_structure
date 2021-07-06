@@ -11,6 +11,8 @@ import {
 import GridItem from "../layouts/GridItem";
 import PostHeader from "./PostHeader";
 import FormInput from "../layouts/FormInput";
+import { useDispatch, useSelector } from "react-redux";
+import { postAdActions } from "../../actions";
 const useStyles = makeStyles((theme) => ({
   root: {},
   cardContent: {
@@ -28,6 +30,8 @@ const valObj = {
 const PostAskingPrice = () => {
   const classes = useStyles();
   const [askingPrice, setAskingPrice] = useState(valObj);
+  const postAd = useSelector((state) => state.postAd.details);
+  const dispatch = useDispatch();
 
   const handleChange = (val) => {
     if (val) {
@@ -45,6 +49,25 @@ const PostAskingPrice = () => {
     //console.log(askingPrice);
   };
 
+  const handleDispatch = (val) => {
+    if (val) {
+      dispatch(
+        postAdActions.addAskingPrice({
+          ...valObj,
+          value: val,
+        })
+      );
+    } else {
+      dispatch(
+        postAdActions.addAskingPrice({
+          ...valObj,
+          error: true,
+          errorText: mandatoryText,
+        })
+      );
+    }
+  };
+
   const title = "Enter Asking Price";
   return (
     <Container className={classes.cardGrid} maxWidth="lg">
@@ -60,6 +83,17 @@ const PostAskingPrice = () => {
                   required
                   fullWidth
                   onChange={(e) => handleChange(e.target.value)}
+                  onBlur={(e) => handleDispatch(e.target.value)}
+                  error={
+                    postAd.asking_price && postAd.asking_price.error
+                      ? postAd.asking_price.error
+                      : askingPrice.error
+                  }
+                  helperText={
+                    postAd.asking_price && postAd.asking_price.error
+                      ? postAd.asking_price.errorText
+                      : askingPrice.errorText
+                  }
                   value={askingPrice.value}
                   InputProps={{
                     startAdornment: (
