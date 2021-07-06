@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 const PostCarFeatures = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const features = useSelector((state) => state.postAd.details.features);
 
   const [carFeatures, setCarFeatures] = useState({
     acFront: false,
@@ -84,14 +86,7 @@ const PostCarFeatures = () => {
         .replace(/([A-Z])/g, " $1")
         .trim();
 
-    return (
-      <FormCheckBox
-        title={title}
-        name={props.name}
-        {...props}
-        onChange={handleChange}
-      />
-    );
+    return <FormCheckBox title={title} name={props.name} {...props} />;
   };
   const Label = (props) => {
     return (
@@ -106,7 +101,6 @@ const PostCarFeatures = () => {
       ...carFeatures,
       [event.target.name]: event.target.checked,
     });
-    // console.log(carFeatures);
   };
 
   const title = "Select Your Car Features";
@@ -140,6 +134,7 @@ const PostCarFeatures = () => {
                             name={data}
                             key={data}
                             checked={carFeatures[data]}
+                            onChange={handleChange}
                           />
                         );
                       })}
@@ -169,6 +164,7 @@ const PostCarFeatures = () => {
                             name={data}
                             key={data}
                             checked={carFeatures[data]}
+                            onChange={handleChange}
                           />
                         );
                       })}
@@ -201,6 +197,7 @@ const PostCarFeatures = () => {
                             name={data}
                             key={data}
                             checked={carFeatures[data]}
+                            onChange={handleChange}
                           />
                         );
                       })}
@@ -230,6 +227,7 @@ const PostCarFeatures = () => {
                             name={data}
                             key={data}
                             checked={carFeatures[data]}
+                            onChange={handleChange}
                           />
                         );
                       })}
@@ -258,6 +256,7 @@ const PostCarFeatures = () => {
                             name={data}
                             key={data}
                             checked={carFeatures[data]}
+                            onChange={handleChange}
                           />
                         );
                       })}
@@ -285,6 +284,7 @@ const PostCarFeatures = () => {
                             name={data}
                             key={data}
                             checked={carFeatures[data]}
+                            onChange={handleChange}
                           />
                         );
                       })}
