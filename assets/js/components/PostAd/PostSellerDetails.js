@@ -124,6 +124,7 @@ const PostSellerDetails = () => {
                     <FormInput
                       fullWidth
                       required
+                      id={`seller${data}`}
                       label={textStyle(data)}
                       value={sellerDetails[data].value}
                       onChange={(e) =>
@@ -154,6 +155,7 @@ const PostSellerDetails = () => {
               <FormInput
                 fullWidth
                 required
+                id="sellernotes"
                 label="Seller's Additional Notes about your Vehicle - ex: Excellent condition, No accidents, Must see"
                 multiline
                 rows={5}

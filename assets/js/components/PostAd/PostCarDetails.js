@@ -31,7 +31,14 @@ const options = [
 ];
 
 const Input = (props) => {
-  return <FormAutoComplete options={options} label={props.title} {...props} />;
+  return (
+    <FormAutoComplete
+      options={options}
+      label={props.title}
+      id={props.title}
+      {...props}
+    />
+  );
 };
 
 const PostCarDetails = () => {
