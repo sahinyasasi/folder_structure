@@ -101,17 +101,12 @@ const PostSellerDetails = () => {
         return dispatch(postAdActions.addSellerNotes(newData));
     }
   };
+  const textStyle = (text) => {
+    let title = text[0].toUpperCase() + text.slice(1).replace("_", " ");
 
-  /* const Input = (props) => {
-    return (
-      <FormInput
-        fullWidth
-        label={`Seller's ${props.title}`}
-        required
-        {...props}
-      />
-    );
-  };*/
+    return ` Seller's ${title}`;
+  };
+
   const title = "Enter Seller Details and Notes";
   return (
     <Container className={classes.cardGrid} maxWidth="lg">
@@ -120,92 +115,38 @@ const PostSellerDetails = () => {
         <Divider />
         <CardContent className={classes.cardContent}>
           <Grid container spacing={3}>
-            <GridItem
-              size={[12, 6, 4]}
-              componentToPassDown={
-                <FormInput
-                  fullWidth
-                  required
-                  label="Seller's Name"
-                  value={sellerDetails.name.value}
-                  onChange={(e) =>
-                    handleChange("name", { value: e.target.value })
-                  }
-                  onBlur={(e) =>
-                    handleDispatch("name", { value: e.target.value })
-                  }
-                  error={
-                    postAdSD && postAdSD.name && postAdSD.name.error
-                      ? postAdSD.name.error
-                      : sellerDetails.name.error
-                  }
-                  helperText={
-                    postAdSD && postAdSD.name && postAdSD.name.error
-                      ? postAdSD.name.errorText
-                      : sellerDetails.name.errorText
-                  }
-                />
-              }
-            />
-
-            <GridItem
-              size={[12, 6, 4]}
-              componentToPassDown={
-                <FormInput
-                  fullWidth
-                  required
-                  label="Seller's Phone"
-                  value={sellerDetails.phone_number.value}
-                  onChange={(e) =>
-                    handleChange("phone_number", { value: e.target.value })
-                  }
-                  onBlur={(e) =>
-                    handleDispatch("phone_number", { value: e.target.value })
-                  }
-                  error={
-                    postAdSD &&
-                    postAdSD.phone_number &&
-                    postAdSD.phone_number.error
-                      ? postAdSD.phone_number.error
-                      : sellerDetails.phone_number.error
-                  }
-                  helperText={
-                    postAdSD &&
-                    postAdSD.phone_number &&
-                    postAdSD.phone_number.error
-                      ? postAdSD.phone_number.errorText
-                      : sellerDetails.phone_number.errorText
+            {["name", "phone_number", "email"].map((data) => {
+              return (
+                <GridItem
+                  key={data}
+                  size={[12, 6, 4]}
+                  componentToPassDown={
+                    <FormInput
+                      fullWidth
+                      required
+                      label={textStyle(data)}
+                      value={sellerDetails[data].value}
+                      onChange={(e) =>
+                        handleChange(data, { value: e.target.value })
+                      }
+                      onBlur={(e) =>
+                        handleDispatch(data, { value: e.target.value })
+                      }
+                      error={
+                        postAdSD && postAdSD[data] && postAdSD[data].error
+                          ? postAdSD[data].error
+                          : sellerDetails[data].error
+                      }
+                      helperText={
+                        postAdSD && postAdSD[data] && postAdSD[data].error
+                          ? postAdSD[data].errorText
+                          : sellerDetails[data].errorText
+                      }
+                    />
                   }
                 />
-              }
-            />
-            <GridItem
-              size={[12, 6, 4]}
-              componentToPassDown={
-                <FormInput
-                  fullWidth
-                  required
-                  label="Seller's Email"
-                  value={sellerDetails.email.value}
-                  onChange={(e) => {
-                    handleChange("email", { value: e.target.value });
-                  }}
-                  onBlur={(e) =>
-                    handleDispatch("email", { value: e.target.value })
-                  }
-                  error={
-                    postAdSD && postAdSD.email && postAdSD.email.error
-                      ? postAdSD.email.error
-                      : sellerDetails.email.error
-                  }
-                  helperText={
-                    postAdSD && postAdSD.email && postAdSD.email.error
-                      ? postAdSD.email.errorText
-                      : sellerDetails.email.errorText
-                  }
-                />
-              }
-            />
+              );
+            })}
           </Grid>
           <GridItem
             size={[12]}
