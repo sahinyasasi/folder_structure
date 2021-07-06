@@ -10,9 +10,8 @@ export default function postAd(state = initialState, action) {
   //   console.log("(Action)========================== ", action);
   let postAdDetails = { ...state.details };
   let postAdFeatures = { ...postAdDetails.features };
+  let sellerDetails = { ...postAdDetails.seller_details };
   switch (action.type) {
-
-    
     case postAdConstants.ADD_INITIAL_LISTING:
       return {
         posted: false,
@@ -21,7 +20,6 @@ export default function postAd(state = initialState, action) {
           ...action.initialListingDetails,
         },
       };
-
 
     case postAdConstants.ADD_EDIT_LISTING:
       return {

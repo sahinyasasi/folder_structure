@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   Card,
   CardContent,
@@ -11,7 +12,7 @@ import {
 import _ from "lodash";
 import FormInput from "../layouts/FormInput";
 import PostHeader from "./PostHeader";
-
+import { postAdActions } from "../../actions";
 import GridItem from "../layouts/GridItem";
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -36,6 +37,8 @@ const valObj = {
 
 const PostSellerDetails = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const postAdSD = useSelector((state) => state.postAd.details.seller_details);
 
   const [sellerDetails, setSellerDetails] = useState({
     name: valObj,
@@ -79,6 +82,25 @@ const PostSellerDetails = () => {
       [key]: newData,
     });
   };
+  const handleDispatch = (key, data) => {
+    let newData = "";
+    if (data && data.value) {
+      newData = updateValObjWithVal(data);
+    } else {
+      newData = updateValObjWithError(`${key} ${mandatoryText}!`);
+    }
+
+    switch (key) {
+      case "name":
+        return dispatch(postAdActions.addSellerName(newData));
+      case "phone_number":
+        return dispatch(postAdActions.addSellerPhNum(newData));
+      case "email":
+        return dispatch(postAdActions.addSellerEmail(newData));
+      case "seller_notes":
+        return dispatch(postAdActions.addSellerNotes(newData));
+    }
+  };
 
   /* const Input = (props) => {
     return (
@@ -109,6 +131,19 @@ const PostSellerDetails = () => {
                   onChange={(e) =>
                     handleChange("name", { value: e.target.value })
                   }
+                  onBlur={(e) =>
+                    handleDispatch("name", { value: e.target.value })
+                  }
+                  error={
+                    postAdSD && postAdSD.name && postAdSD.name.error
+                      ? postAdSD.name.error
+                      : sellerDetails.name.error
+                  }
+                  helperText={
+                    postAdSD && postAdSD.name && postAdSD.name.error
+                      ? postAdSD.name.errorText
+                      : sellerDetails.name.errorText
+                  }
                 />
               }
             />
@@ -124,6 +159,23 @@ const PostSellerDetails = () => {
                   onChange={(e) =>
                     handleChange("phone_number", { value: e.target.value })
                   }
+                  onBlur={(e) =>
+                    handleDispatch("phone_number", { value: e.target.value })
+                  }
+                  error={
+                    postAdSD &&
+                    postAdSD.phone_number &&
+                    postAdSD.phone_number.error
+                      ? postAdSD.phone_number.error
+                      : sellerDetails.phone_number.error
+                  }
+                  helperText={
+                    postAdSD &&
+                    postAdSD.phone_number &&
+                    postAdSD.phone_number.error
+                      ? postAdSD.phone_number.errorText
+                      : sellerDetails.phone_number.errorText
+                  }
                 />
               }
             />
@@ -137,8 +189,20 @@ const PostSellerDetails = () => {
                   value={sellerDetails.email.value}
                   onChange={(e) => {
                     handleChange("email", { value: e.target.value });
-                    console.log(e.target.value);
                   }}
+                  onBlur={(e) =>
+                    handleDispatch("email", { value: e.target.value })
+                  }
+                  error={
+                    postAdSD && postAdSD.email && postAdSD.email.error
+                      ? postAdSD.email.error
+                      : sellerDetails.email.error
+                  }
+                  helperText={
+                    postAdSD && postAdSD.email && postAdSD.email.error
+                      ? postAdSD.email.errorText
+                      : sellerDetails.email.errorText
+                  }
                 />
               }
             />
@@ -155,6 +219,23 @@ const PostSellerDetails = () => {
                 value={sellerDetails.seller_notes.value}
                 onChange={(e) =>
                   handleChange("seller_notes", { value: e.target.value })
+                }
+                onBlur={(e) =>
+                  handleDispatch("seller_notes", { value: e.target.value })
+                }
+                error={
+                  postAdSD &&
+                  postAdSD.seller_notes &&
+                  postAdSD.seller_notes.error
+                    ? postAdSD.seller_notes.error
+                    : sellerDetails.seller_notes.error
+                }
+                helperText={
+                  postAdSD &&
+                  postAdSD.seller_notes &&
+                  postAdSD.seller_notes.error
+                    ? postAdSD.seller_notes.errorText
+                    : sellerDetails.seller_notes.errorText
                 }
               />
             }
