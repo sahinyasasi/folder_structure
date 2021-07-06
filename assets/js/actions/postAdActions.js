@@ -3,6 +3,7 @@ import { postAdConstants } from "../constants/postAdConstants";
 
 import { history } from "../utils/history";
 import { postAdService } from "../services/postAdService";
+import { apiService } from "../services/apiService";
 
 export const postAdActions = {
   addInitialListing,

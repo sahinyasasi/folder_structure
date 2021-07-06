@@ -11,12 +11,11 @@ import PostCarDetails from "./PostCarDetails";
 import PostCarFeatures from "./PostCarFeatures";
 import PostSellerDetails from "./PostSellerDetails";
 import PostImages from "./PostImages";
-
+import PostLocationDetails from "./PostLocationDetails";
 import PostAskingPrice from "./PostAskingPrice";
 import PostSubmitDetails from "./PostSubmitDetails";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  const currentUser = useSelector((state) => state.currentUser);
 
   return (
     <div
@@ -31,7 +30,7 @@ function TabPanel(props) {
           {children}
           <PostSellerDetails />
           <PostImages />
-
+          <PostLocationDetails />
           <PostAskingPrice />
           <PostSubmitDetails />
         </Box>
