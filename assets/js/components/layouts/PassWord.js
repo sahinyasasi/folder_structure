@@ -19,13 +19,7 @@ const PassWord = (props) => {
     event.preventDefault();
   };
   return (
-    <FormControl
-      fullWidth
-      variant="outlined"
-      required
-      margin="normal"
-      size="small"
-    >
+    <FormControl fullWidth variant="outlined" required margin="normal">
       <InputLabel htmlFor="post-login-pwd">Password</InputLabel>
       <OutlinedInput
         id="post-login-pwd"
