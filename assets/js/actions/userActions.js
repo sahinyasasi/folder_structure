@@ -25,13 +25,12 @@ function register(userData, path) {
         dispatch(setAlert("User Created Successfully", "success"));
         console.log("register user success", userData);
         history.push(path);
-        console.log("after home page", userData, path);
       })
       .catch((response) => {
         dispatch(failure(response));
         response.json().then((json) => {
           let err = Object.keys(json.errors);
-          console.log(Object.keys(json.errors));
+
           dispatch(setAlert(`${err} has already beeen taken`, "error"));
         });
       });

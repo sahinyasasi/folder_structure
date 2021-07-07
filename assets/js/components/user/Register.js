@@ -83,12 +83,10 @@ const Register = () => {
         ...Object.entries(registerDetails).map(([k, v]) => ({ [k]: v.value }))
       );
       console.log("(userObj)==========================userObj ", userObj);
-      dispatch(userActions.register({ user: userObj }, "/dashboard"));
+      dispatch(userActions.register({ user: userObj }, "/"));
     } else {
       console.log(" register failed Validation!!!!!!!!!!!!!");
       setRegisterDetails(validationResult.registerErrorVals);
-      //   dispatch(userActions.addUserRegisterValidations(validationResult.registerErrorVals));
-      //   dispatch(alertActions.error("Please check all the fields!!"));
     }
   };
   const textStyle = (name) => {
@@ -98,7 +96,7 @@ const Register = () => {
   return (
     <div className={classes.root} title="Register">
       <Container className={classes.cardContainer} maxWidth="sm">
-        <Box mt={4} display="flex" justifyContent="center">
+        <Box mt={2} display="flex" justifyContent="center">
           <Typography color="textPrimary" gutterBottom variant="h5">
             Register a new user
           </Typography>
