@@ -27,6 +27,7 @@ const PassWord = (props) => {
         name="password"
         value={props.value}
         onChange={props.onChange}
+        error={props.error}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
