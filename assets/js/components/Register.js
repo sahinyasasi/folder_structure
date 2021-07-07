@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-
+import { validationService } from "../services/validationService";
 import FormInput from "./layouts/FormInput";
 
 import CustomButton from "./layouts/CustomButton";
@@ -42,29 +42,74 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 400,
   },
 }));
-
+const valObj = { value: "", error: false, errorText: "" };
+const mandatoryText = "field cannot be empty";
 const Register = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [registerDetails, setRegisterDetails] = useState({
-    first_name: "",
-    last_name: "",
-    login_id: "",
-    email: "",
-    password: "",
-    phone: "",
+    first_name: valObj,
+    last_name: valObj,
+    login_id: valObj,
+    email: valObj,
+    password: valObj,
+    phone: valObj,
   });
+
+  const updateValObjWithVal = (data) => {
+    if (data && data.value) {
+      return {
+        ...valObj,
+        value: data.value,
+      };
+    } else {
+      return {
+        ...valObj,
+        value: "",
+      };
+    }
+  };
+
+  const updateValObjWithError = (errorText) => {
+    return {
+      ...valObj,
+      value: "",
+      error: true,
+      errorText: errorText,
+    };
+  };
   const handleChange = (key, data) => {
+    let userDetails = "";
+    if (data && data.value) {
+      userDetails = updateValObjWithVal(data);
+    } else {
+      userDetails = updateValObjWithError(`${key} ${mandatoryText}!`);
+    }
+
     setRegisterDetails({
       ...registerDetails,
-      [key]: data.value,
+      [key]: userDetails,
     });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-
     console.log("(handleSubmit)========================== ", registerDetails);
-    dispatch(userActions.register({ user: registerDetails }, "/dashboard"));
+    let validationResult =
+      validationService.validateRegisterUserDetails(registerDetails);
+    if (validationResult.isValid) {
+      console.log("Success Validation Ready to register");
+      let userObj = Object.assign(
+        {},
+        ...Object.entries(registerDetails).map(([k, v]) => ({ [k]: v.value }))
+      );
+      console.log("(userObj)==========================userObj ", userObj);
+      dispatch(userActions.register({ user: userObj }, "/dashboard"));
+    } else {
+      console.log(" register failed Validation!!!!!!!!!!!!!");
+      setRegisterDetails(validationResult.registerErrorVals);
+      //   dispatch(userActions.addUserRegisterValidations(validationResult.registerErrorVals));
+      //   dispatch(alertActions.error("Please check all the fields!!"));
+    }
   };
   const textStyle = (name) => {
     return name[0].toUpperCase() + name.slice(1).replace("_", " ").trim();
@@ -89,12 +134,13 @@ const Register = () => {
                         id={data}
                         key={data}
                         label={textStyle(data)}
-                        value={registerDetails[data]}
+                        value={registerDetails[data].value}
+                        error={registerDetails[data].error}
+                        helperText={registerDetails[data].errorText}
                         fullWidth
                         required
                         onChange={(e) => {
                           handleChange(data, { value: e.target.value });
-                          // console.log(registerDetails);
                         }}
                       />
                     );
@@ -102,10 +148,12 @@ const Register = () => {
                 )}
 
                 <Password
-                  value={registerDetails.password}
+                  value={registerDetails.password.value}
                   onChange={(e) =>
                     handleChange("password", { value: e.target.value })
                   }
+                  error={registerDetails.password.error}
+                  helperText={registerDetails.password.errorText}
                 />
                 <Box mt={6}>
                   <CustomButton

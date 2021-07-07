@@ -12,7 +12,7 @@ function register(user) {
   };
 
   return fetch(`http://localhost:4000/api/apps/1001/users/`, requestOptions)
-    .then(handleResponse)
+    .then((handleResponse) => handleResponse)
     .then((user) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       localStorage.setItem("slc_user", JSON.stringify(user));
