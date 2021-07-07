@@ -11,18 +11,28 @@ function register(userData, path) {
   return (dispatch) => {
     dispatch(request(userData));
 
-    userService.register(userData).then(
-      (userData) => {
+    userService
+      .register(userData)
+      .then((response) => {
+        if (response.status >= 200 && response.status <= 299) {
+          return response.json();
+        } else {
+          return Promise.reject(response);
+        }
+      })
+      .then((userData) => {
         dispatch(success());
 
         console.log("register user success", userData);
         history.push(path);
         console.log("after home page", userData, path);
-      },
-      (error) => {
-        dispatch(failure(error));
-      }
-    );
+      })
+      .catch((response) => {
+        dispatch(failure(response));
+        response.json().then((json) => {
+          console.log(Object.keys(json.errors));
+        });
+      });
   };
 
   function request(user) {
