@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { validationService } from "../services/validationService";
-import FormInput from "./layouts/FormInput";
+import { validationService } from "../../services/validationService";
+import FormInput from "../layouts/FormInput";
 
-import CustomButton from "./layouts/CustomButton";
-import { userActions } from "../actions";
+import CustomButton from "../layouts/CustomButton";
+import { userActions } from "../../actions";
 import {
   Box,
   Card,
@@ -15,7 +15,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-import Password from "./layouts/PassWord";
+import Password from "../layouts/PassWord";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -56,34 +56,14 @@ const Register = () => {
     phone: valObj,
   });
 
-  const updateValObjWithVal = (data) => {
-    if (data && data.value) {
-      return {
-        ...valObj,
-        value: data.value,
-      };
-    } else {
-      return {
-        ...valObj,
-        value: "",
-      };
-    }
-  };
-
-  const updateValObjWithError = (errorText) => {
-    return {
-      ...valObj,
-      value: "",
-      error: true,
-      errorText: errorText,
-    };
-  };
   const handleChange = (key, data) => {
     let userDetails = "";
     if (data && data.value) {
-      userDetails = updateValObjWithVal(data);
+      userDetails = validationService.updateValObjWithVal(data);
     } else {
-      userDetails = updateValObjWithError(`${key} ${mandatoryText}!`);
+      userDetails = validationService.updateValObjWithError(
+        `${key} ${mandatoryText}!`
+      );
     }
 
     setRegisterDetails({

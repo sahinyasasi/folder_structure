@@ -1,10 +1,25 @@
 export const validationService = {
   validateRegisterUserDetails,
   updateValObjWithError,
+  updateValObjWithVal,
 };
 
 const mandatoryText = "field cannot be empty";
 const valObj = { value: "", error: false, errorText: "" };
+function updateValObjWithVal(data) {
+  if (data && data.value) {
+    return {
+      ...valObj,
+      value: data.value,
+    };
+  } else {
+    return {
+      ...valObj,
+      value: "",
+    };
+  }
+}
+
 function updateValObjWithError(errorText) {
   return {
     ...valObj,

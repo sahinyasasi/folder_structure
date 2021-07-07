@@ -6,7 +6,7 @@ import { history } from "./utils/history";
 import { store } from "./utils/store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 const rootElement = document.getElementById("root");
-import Register from "./components/Register";
+import Register from "./components/user/Register";
 
 import "../css/app.css";
 

@@ -10,6 +10,7 @@ import {
   Container,
 } from "@material-ui/core";
 import _ from "lodash";
+import { validationService } from "../../services/validationService";
 import FormInput from "../layouts/FormInput";
 import PostHeader from "./PostHeader";
 import { postAdActions } from "../../actions";
@@ -47,34 +48,14 @@ const PostSellerDetails = () => {
     seller_notes: valObj,
   });
 
-  const updateValObjWithVal = (data) => {
-    if (data && data.value) {
-      return {
-        ...valObj,
-        value: data.value,
-      };
-    } else {
-      return {
-        ...valObj,
-        value: "",
-      };
-    }
-  };
-
-  const updateValObjWithError = (errorText) => {
-    return {
-      ...valObj,
-      value: "",
-      error: true,
-      errorText: errorText,
-    };
-  };
   const handleChange = (key, data) => {
     let newData = "";
     if (data && data.value) {
-      newData = updateValObjWithVal(data);
+      newData = validationService.updateValObjWithVal(data);
     } else {
-      newData = updateValObjWithError(`${key} ${mandatoryText}!`);
+      newData = validationService.updateValObjWithError(
+        `${key} ${mandatoryText}!`
+      );
     }
 
     setSellerDetails({
