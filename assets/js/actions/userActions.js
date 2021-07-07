@@ -1,6 +1,6 @@
 import { userConstants } from "../constants/userConstants";
 import { userService } from "../services/userService";
-
+import { setAlert } from "./alertActions";
 import { history } from "../utils/history";
 
 export const userActions = {
@@ -22,7 +22,7 @@ function register(userData, path) {
       })
       .then((userData) => {
         dispatch(success());
-
+        dispatch(setAlert("User Created Successfully", "success"));
         console.log("register user success", userData);
         history.push(path);
         console.log("after home page", userData, path);
@@ -30,7 +30,9 @@ function register(userData, path) {
       .catch((response) => {
         dispatch(failure(response));
         response.json().then((json) => {
+          let err = Object.keys(json.errors);
           console.log(Object.keys(json.errors));
+          dispatch(setAlert(`${err} has already beeen taken`, "error"));
         });
       });
   };

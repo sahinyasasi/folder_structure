@@ -7,7 +7,7 @@ import { store } from "./utils/store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 const rootElement = document.getElementById("root");
 import Register from "./components/user/Register";
-
+import Alerts from "./components/Alert";
 import "../css/app.css";
 
 import PostAd from "./components/PostAd";
@@ -15,12 +15,15 @@ import PostAd from "./components/PostAd";
 const App = () => {
   return (
     <Router history={history}>
-      <Route exact path="/postad">
-        <PostAd />
-      </Route>
-      <Route exact path="/">
-        <Register />
-      </Route>
+      <div className="container">
+        <Alerts />
+        <Route exact path="/postad">
+          <PostAd />
+        </Route>
+        <Route exact path="/">
+          <Register />
+        </Route>
+      </div>
     </Router>
   );
 };
