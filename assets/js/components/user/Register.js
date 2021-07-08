@@ -83,7 +83,7 @@ const Register = () => {
         ...Object.entries(registerDetails).map(([k, v]) => ({ [k]: v.value }))
       );
       console.log("(userObj)==========================userObj ", userObj);
-      dispatch(userActions.register({ user: userObj }, "/"));
+      dispatch(userActions.register({ user: userObj }, "/dashboard"));
     } else {
       console.log(" register failed Validation!!!!!!!!!!!!!");
       setRegisterDetails(validationResult.registerErrorVals);

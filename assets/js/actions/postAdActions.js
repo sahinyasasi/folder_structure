@@ -47,9 +47,8 @@ function submitAdDetails(ad, path) {
     const submitAd = async () => {
       try {
         var response = "";
-
         response = await postAdService.postAd(ad);
-
+        console.log(response.data);
         dispatch(success(response.data.id));
         console.log("Post Ad success", response.data.id);
         history.push(path);

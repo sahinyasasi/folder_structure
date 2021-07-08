@@ -39,12 +39,12 @@ const valObj = {
 const PostSellerDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const postAdSD = useSelector((state) => state.postAd.details.seller_details);
+  const postAdSD = useSelector((state) => state.postAd.details);
 
   const [sellerDetails, setSellerDetails] = useState({
-    name: valObj,
-    email: valObj,
-    phone_number: valObj,
+    seller_name: valObj,
+    seller_email: valObj,
+    seller_phone: valObj,
     seller_notes: valObj,
   });
 
@@ -66,17 +66,19 @@ const PostSellerDetails = () => {
   const handleDispatch = (key, data) => {
     let newData = "";
     if (data && data.value) {
-      newData = updateValObjWithVal(data);
+      newData = validationService.updateValObjWithVal(data);
     } else {
-      newData = updateValObjWithError(`${key} ${mandatoryText}!`);
+      newData = validationService.updateValObjWithError(
+        `${key} ${mandatoryText}!`
+      );
     }
 
     switch (key) {
-      case "name":
+      case "seller_name":
         return dispatch(postAdActions.addSellerName(newData));
-      case "phone_number":
+      case "seller_phone":
         return dispatch(postAdActions.addSellerPhNum(newData));
-      case "email":
+      case "seller_email":
         return dispatch(postAdActions.addSellerEmail(newData));
       case "seller_notes":
         return dispatch(postAdActions.addSellerNotes(newData));
@@ -85,7 +87,7 @@ const PostSellerDetails = () => {
   const textStyle = (text) => {
     let title = text[0].toUpperCase() + text.slice(1).replace("_", " ");
 
-    return ` Seller's ${title}`;
+    return ` ${title}`;
   };
 
   const title = "Enter Seller Details and Notes";
@@ -96,7 +98,7 @@ const PostSellerDetails = () => {
         <Divider />
         <CardContent className={classes.cardContent}>
           <Grid container spacing={3}>
-            {["name", "phone_number", "email"].map((data) => {
+            {["seller_name", "seller_phone", "seller_email"].map((data) => {
               return (
                 <GridItem
                   key={data}

@@ -10,7 +10,7 @@ export default function postAd(state = initialState, action) {
   //   console.log("(Action)========================== ", action);
   let postAdDetails = { ...state.details };
   let postAdFeatures = { ...postAdDetails.features };
-  let sellerDetails = { ...postAdDetails.seller_details };
+
   switch (action.type) {
     case postAdConstants.ADD_INITIAL_LISTING:
       return {
@@ -58,7 +58,7 @@ export default function postAd(state = initialState, action) {
         posted: false,
         details: {
           ...postAdDetails,
-          post_ad_id: action.postId,
+          external_id: action.postId,
         },
       };
 
@@ -153,51 +153,35 @@ export default function postAd(state = initialState, action) {
       };
 
     case postAdConstants.ADD_VEHICLE_SELLER_NOTES:
-      let modSellerNotesDetails = {
-        ...sellerDetails,
-        seller_notes: action.sellerNotes,
-      };
       return {
         posted: false,
         details: {
           ...postAdDetails,
-          seller_details: modSellerNotesDetails,
+          seller_notes: action.sellerNotes,
         },
       };
     case postAdConstants.ADD_VEHICLE_SELLER_NAME:
-      let modSellerNameDetails = {
-        ...sellerDetails,
-        name: action.sellerName,
-      };
       return {
         posted: false,
         details: {
           ...postAdDetails,
-          seller_details: modSellerNameDetails,
+          seller_name: action.sellerName,
         },
       };
     case postAdConstants.ADD_VEHICLE_SELLER_EMAIL:
-      let modSellerEmailDetails = {
-        ...sellerDetails,
-        email: action.sellerEmail,
-      };
       return {
         posted: false,
         details: {
           ...postAdDetails,
-          seller_details: modSellerEmailDetails,
+          seller_email: action.sellerEmail,
         },
       };
     case postAdConstants.ADD_VEHICLE_SELLER_PHONE_NUM:
-      let modSellerPhoneDetails = {
-        ...sellerDetails,
-        phone_number: action.sellerPhNum,
-      };
       return {
         posted: false,
         details: {
           ...postAdDetails,
-          seller_details: modSellerPhoneDetails,
+          seller_phone: action.sellerPhNum,
         },
       };
     case postAdConstants.ADD_VEHICLE_LOCATION:

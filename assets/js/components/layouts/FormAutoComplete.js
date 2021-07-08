@@ -1,6 +1,6 @@
 import React from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import FormInput from "./FormInput";
+import { TextField } from "@material-ui/core";
 
 const FormAutoComplete = (props) => {
   return (
@@ -8,7 +8,7 @@ const FormAutoComplete = (props) => {
       options={props.options}
       getOptionLabel={(option) => option.title}
       renderInput={(params) => (
-        <FormInput
+        <TextField
           {...params}
           label={props.label}
           error={props.error}
