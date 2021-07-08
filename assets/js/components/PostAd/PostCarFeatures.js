@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 const PostCarFeatures = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const features = useSelector((state) => state.postAd.details.features);
-
+  const postAd = useSelector((state) => state.postAd.details);
+  
   const [carFeatures, setCarFeatures] = useState({
     acFront: false,
     acRear: false,
@@ -101,6 +101,36 @@ const PostCarFeatures = () => {
       ...carFeatures,
       [event.target.name]: event.target.checked,
     });
+    let vehicleFeatures = "";
+    if (postAd.features.length === 0 && !postAd.features.value) {
+      vehicleFeatures = {
+        ...valObj,
+        value: [{ [event.target.name]: event.target.checked }],
+      };
+    } else {
+      if (event.target.checked == true) {
+        _.merge(features.value, [
+          ...features.value,
+          ...[{ [event.target.name]: event.target.checked }],
+        ]);
+        vehicleFeatures = features;
+      } else {
+        vehicleFeatures = {
+          ...valObj,
+          value: features.value.filter(
+            (f) => Object.keys(f)[0] !== event.target.name
+          ),
+        };
+        if (vehicleFeatures.value.length === 0) {
+          vehicleFeatures = updateValObjWithError(
+            `Make sure some of the vehicle features are selected!`
+          );
+        }
+      }
+    }
+    console.log(vehicleFeatures);
+
+    dispatch(postAdActions.addVehicleFeature(vehicleFeatures));
   };
 
   const title = "Select Your Car Features";
