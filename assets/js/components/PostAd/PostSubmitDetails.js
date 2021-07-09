@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import CustomButton from "../layouts/CustomButton";
 import { postAdActions, alertActions } from "../../actions";
+import { validationService } from "../../services/validationService";
 const useStyles = makeStyles((theme) => ({
   root: {},
   cardContent: {
@@ -30,25 +31,35 @@ const PostSubmitDetails = () => {
   const postAd = useSelector((state) => state.postAd.details);
   const dispatch = useDispatch();
   const postAdSubmit = () => {
-    let postAdObj = {};
-    // let postAdObj = Object.assign(
-    //   {},
-    Object.entries(postAd).map(([k, v]) => {
-      if (k == "external_id") {
-        postAdObj[k] = v;
-      } else if (k == "type") {
-        postAdObj[k] = v;
-      } else if (k == "ad_status") {
-        postAdObj[k] = v;
-      } else if (k == "selected_pricing_plan_id") {
-        postAdObj[k] = v;
-      } else {
-        postAdObj[k] = v.value;
-      }
-    });
+    let validationResult = validationService.validatePostAd(postAd);
+    if (validationResult.isValid) {
+      console.log("Success Validation Ready to post", postAd);
+      let postAdObj = {};
+      // let postAdObj = Object.assign(
+      //   {},
+      Object.entries(postAd).map(([k, v]) => {
+        if (k == "external_id") {
+          postAdObj[k] = v;
+        } else if (k == "type") {
+          postAdObj[k] = v;
+        } else if (k == "ad_status") {
+          postAdObj[k] = v;
+        } else if (k == "selected_pricing_plan_id") {
+          postAdObj[k] = v;
+        } else {
+          postAdObj[k] = v.value;
+        }
+      });
 
-    // console.log("Success Validation Ready to postpostAdObj ", postAdObj);
-    dispatch(postAdActions.submitAdDetails({ ad: postAdObj }, "/"));
+      // console.log("Success Validation Ready to postpostAdObj ", postAdObj);
+      dispatch(postAdActions.submitAdDetails({ ad: postAdObj }, "/"));
+    } else {
+      dispatch(
+        postAdActions.addPostValidations(validationResult.postAdErrorVals)
+      );
+
+      console.log("failed Validation!!!!!!!!!!!!!");
+    }
   };
   return (
     <Container className={classes.root} maxWidth="lg">
