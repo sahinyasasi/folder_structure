@@ -16,6 +16,7 @@ import FormCheckBox from "../layouts/FormCheckBox";
 import PostHeader from "./PostHeader";
 import GridItem from "../layouts/GridItem";
 import { postAdActions } from "../../actions";
+import validationService from "../../services/validationService";
 const useStyles = makeStyles((theme) => ({
   root: {},
   cardContent: {},
@@ -31,11 +32,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+const valObj = {
+  value: "",
+  error: false,
+  errorText: "ex: Excellent condition, No accidents, Must see",
+};
 const PostCarFeatures = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const postAd = useSelector((state) => state.postAd.details);
-  
+  let features = useSelector((state) => state.postAd.details.features);
+
   const [carFeatures, setCarFeatures] = useState({
     acFront: false,
     acRear: false,
@@ -102,7 +108,8 @@ const PostCarFeatures = () => {
       [event.target.name]: event.target.checked,
     });
     let vehicleFeatures = "";
-    if (postAd.features.length === 0 && !postAd.features.value) {
+
+    if (!features) {
       vehicleFeatures = {
         ...valObj,
         value: [{ [event.target.name]: event.target.checked }],
@@ -122,13 +129,12 @@ const PostCarFeatures = () => {
           ),
         };
         if (vehicleFeatures.value.length === 0) {
-          vehicleFeatures = updateValObjWithError(
+          vehicleFeatures = validationService.updateValObjWithError(
             `Make sure some of the vehicle features are selected!`
           );
         }
       }
     }
-    console.log(vehicleFeatures);
 
     dispatch(postAdActions.addVehicleFeature(vehicleFeatures));
   };
