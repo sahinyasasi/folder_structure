@@ -11,6 +11,7 @@ import {
   FormGroup,
   makeStyles,
   Container,
+  Box,
 } from "@material-ui/core";
 import FormCheckBox from "../layouts/FormCheckBox";
 import PostHeader from "./PostHeader";
@@ -330,6 +331,14 @@ const PostCarFeatures = () => {
               />
             </Grid>
           </CardContent>
+          <Divider />
+          <Box display="flex" justifyContent="flex-start" p={2}>
+            {features && features.error && (
+              <Typography variant="button" display="block" color="error">
+                *** {features.errorText}
+              </Typography>
+            )}
+          </Box>
         </Card>
       </form>
     </Container>

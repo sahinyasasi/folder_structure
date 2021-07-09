@@ -245,6 +245,16 @@ const PostCarDetails = () => {
                     onChange={(event, data) => {
                       handleChange("brand", data);
                     }}
+                    error={
+                      postAd.brand && postAd.brand.error
+                        ? postAd.brand.error
+                        : carDetails.brand.error
+                    }
+                    helperText={
+                      postAd.brand && postAd.brand.error
+                        ? postAd.brand.errorText
+                        : carDetails.brand.errorText
+                    }
                   />
                 }
               />
@@ -258,6 +268,16 @@ const PostCarDetails = () => {
                     onChange={(event, data) => {
                       handleChange("model", data);
                     }}
+                    error={
+                      postAd.model && postAd.model.error
+                        ? postAd.model.error
+                        : carDetails.model.error
+                    }
+                    helperText={
+                      postAd.model && postAd.model.error
+                        ? postAd.model.errorText
+                        : carDetails.model.errorText
+                    }
                   />
                 }
               />
@@ -270,6 +290,16 @@ const PostCarDetails = () => {
                     onChange={(event, data) => {
                       handleChange("variant", data);
                     }}
+                    error={
+                      postAd.variant && postAd.variant.error
+                        ? postAd.variant.error
+                        : carDetails.variant.error
+                    }
+                    helperText={
+                      postAd.variant && postAd.variant.error
+                        ? postAd.variant.errorText
+                        : carDetails.variant.errorText
+                    }
                   />
                 }
               />
@@ -278,24 +308,98 @@ const PostCarDetails = () => {
           <Divider />
           <Box display="flex" p={2} className={classes.cardContent}>
             <Grid container spacing={5}>
-              {["year", "condition", "fuelType", "bodyType"].map((cond) => {
-                return (
-                  <GridItem
-                    key={cond}
-                    size={[12, 6, 3]}
-                    componentToPassDown={
-                      <FormAutoComplete
-                        label={textStyle(cond)}
-                        id={cond}
-                        options={carAttr[cond + "s"]}
-                        onChange={(event, data) => {
-                          handleChange(cond, data);
-                        }}
-                      />
+              <GridItem
+                size={[12, 6, 3]}
+                componentToPassDown={
+                  <FormAutoComplete
+                    label="Condition"
+                    id="condition"
+                    options={carAttr.conditions}
+                    onChange={(event, data) => {
+                      handleChange("condition", data);
+                    }}
+                    error={
+                      postAd.condition && postAd.condition.error
+                        ? postAd.condition.error
+                        : carDetails.fuelType.error
+                    }
+                    helperText={
+                      postAd.condition && postAd.condition.error
+                        ? postAd.condition.errorText
+                        : carDetails.fuelType.errorText
                     }
                   />
-                );
-              })}
+                }
+              />
+              <GridItem
+                size={[12, 6, 3]}
+                componentToPassDown={
+                  <FormAutoComplete
+                    label="Year"
+                    id="year"
+                    options={carAttr.years}
+                    onChange={(event, data) => {
+                      handleChange("year", data);
+                    }}
+                    error={
+                      postAd.year && postAd.year.error
+                        ? postAd.year.error
+                        : carDetails.fuelType.error
+                    }
+                    helperText={
+                      postAd.year && postAd.year.error
+                        ? postAd.year.errorText
+                        : carDetails.fuelType.errorText
+                    }
+                  />
+                }
+              />
+              <GridItem
+                size={[12, 6, 3]}
+                componentToPassDown={
+                  <FormAutoComplete
+                    label="Fuel Type"
+                    id="fueltype"
+                    options={carAttr.fuelTypes}
+                    onChange={(event, data) => {
+                      handleChange("fuelType", data);
+                    }}
+                    error={
+                      postAd.fuel_type && postAd.fuel_type.error
+                        ? postAd.fuel_type.error
+                        : carDetails.fuelType.error
+                    }
+                    helperText={
+                      postAd.fuel_type && postAd.fuel_type.error
+                        ? postAd.fuel_type.errorText
+                        : carDetails.fuelType.errorText
+                    }
+                  />
+                }
+              />
+              <GridItem
+                size={[12, 6, 3]}
+                componentToPassDown={
+                  <FormAutoComplete
+                    label="Body Type"
+                    id="bodytype"
+                    options={carAttr.bodyTypes}
+                    onChange={(event, data) => {
+                      handleChange("bodyType", data);
+                    }}
+                    error={
+                      postAd.body_type && postAd.body_type.error
+                        ? postAd.body_type.error
+                        : carDetails.bodyType.error
+                    }
+                    helperText={
+                      postAd.body_type && postAd.body_type.error
+                        ? postAd.body_type.errorText
+                        : carDetails.bodyType.errorText
+                    }
+                  />
+                }
+              />
             </Grid>
           </Box>
           <Divider />
@@ -311,6 +415,16 @@ const PostCarDetails = () => {
                     onChange={(event, data) => {
                       handleChange("transmission", data);
                     }}
+                    error={
+                      postAd.transmission && postAd.transmission.error
+                        ? postAd.transmission.error
+                        : carDetails.transmission.error
+                    }
+                    helperText={
+                      postAd.transmission && postAd.transmission.error
+                        ? postAd.transmission.errorText
+                        : carDetails.transmission.errorText
+                    }
                   />
                 }
               />
@@ -324,6 +438,16 @@ const PostCarDetails = () => {
                     onChange={(event, data) => {
                       handleChange("noOfOwners", data);
                     }}
+                    error={
+                      postAd.no_of_owners && postAd.no_of_owners.error
+                        ? postAd.no_of_owners.error
+                        : carDetails.noOfOwners.error
+                    }
+                    helperText={
+                      postAd.no_of_owners && postAd.no_of_owners.error
+                        ? postAd.no_of_owners.errorText
+                        : carDetails.noOfOwners.errorText
+                    }
                   />
                 }
               />
@@ -350,6 +474,16 @@ const PostCarDetails = () => {
                         <InputAdornment position="end">KM</InputAdornment>
                       ),
                     }}
+                    error={
+                      postAd.km_driven && postAd.km_driven.error
+                        ? postAd.km_driven.error
+                        : carDetails.kmDriven.error
+                    }
+                    helperText={
+                      postAd.km_driven && postAd.km_driven.error
+                        ? postAd.km_driven.errorText
+                        : carDetails.kmDriven.errorText
+                    }
                   />
                 }
               />
