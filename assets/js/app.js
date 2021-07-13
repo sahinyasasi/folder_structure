@@ -9,6 +9,7 @@ const rootElement = document.getElementById("root");
 import Register from "./components/user/Register";
 import Alerts from "./components/Alert";
 import "../css/app.css";
+import DashBoardLayout from "./components/containers/DashBoardLayout";
 
 import PostAd from "./components/PostAd";
 
@@ -17,12 +18,18 @@ const App = () => {
     <Router history={history}>
       <div className="container">
         <Alerts />
+        <DashBoardLayout>
+          <Route exact path="/">
+
+          </Route>
+        </DashBoardLayout>
         <Route exact path="/postad">
           <PostAd />
         </Route>
-        <Route exact path="/">
+        <Route exact path="/login">
           <Register />
         </Route>
+
       </div>
     </Router>
   );
