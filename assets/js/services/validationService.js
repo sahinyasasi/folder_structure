@@ -3,6 +3,7 @@ export const validationService = {
   updateValObjWithError,
   updateValObjWithVal,
   validatePostAd,
+  validateLoginUserDetails
 };
 
 const mandatoryText = "field cannot be empty";
@@ -87,6 +88,34 @@ function validateRegisterUserDetails(registerVals) {
   } else {
     return { isValid, registerErrorVals };
   }
+}
+function validateLoginUserDetails(loginVals) {
+  let isValid = true;
+  let loginErrorVals = { ...loginVals };
+
+  if (!(loginVals.email && loginVals.email.value)) {
+    loginErrorVals = {
+      ...loginErrorVals,
+      email: updateValObjWithError(`Email ${mandatoryText}!`),
+    };
+    isValid = false;
+  }
+
+  if (!(loginVals.password && loginVals.password.value)) {
+    loginErrorVals = {
+      ...loginErrorVals,
+      password: updateValObjWithError(`Password ${mandatoryText}!`),
+    };
+    isValid = false;
+  }
+
+  if (isValid) {
+    return { isValid };
+  } else {
+    return { isValid, loginErrorVals };
+  }
+
+
 }
 
 function validatePostAd(postAd) {

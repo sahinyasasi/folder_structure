@@ -6,10 +6,11 @@ import { history } from "./utils/history";
 import { store } from "./utils/store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 const rootElement = document.getElementById("root");
-import Register from "./components/user/Register";
+import Register from "./components/Account/Register";
 import Alerts from "./components/Alert";
 import "../css/app.css";
 import DashBoardLayout from "./components/containers/DashBoardLayout";
+import Login from "./components/Account/Login";
 
 import PostAd from "./components/PostAd";
 
@@ -18,17 +19,20 @@ const App = () => {
     <Router history={history}>
       <div className="container">
         <Alerts />
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
         <DashBoardLayout>
           <Route exact path="/">
+          </Route>
+          <Route exact path="/postad">
+            <PostAd />
 
           </Route>
         </DashBoardLayout>
-        <Route exact path="/postad">
-          <PostAd />
-        </Route>
-        <Route exact path="/login">
-          <Register />
-        </Route>
 
       </div>
     </Router>

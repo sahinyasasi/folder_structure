@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { validationService } from "../../services/validationService";
 import FormInput from "../layouts/FormInput";
+import Page from "../layouts/Page"
 
 import CustomButton from "../layouts/CustomButton";
 import { userActions } from "../../actions";
@@ -18,7 +19,7 @@ import {
 import Password from "../layouts/PassWord";
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    marginTop: theme.spacing(3),
     display: "flex",
     flexDirection: "column",
     minHeight: "100vh",
@@ -94,7 +95,7 @@ const Register = () => {
   };
 
   return (
-    <div className={classes.root} title="Register">
+    <Page className={classes.root} title="Register">
       <Container className={classes.cardContainer} maxWidth="sm">
         <Box mt={2} display="flex" justifyContent="center">
           <Typography color="textPrimary" gutterBottom variant="h5">
@@ -146,7 +147,7 @@ const Register = () => {
           </CardContent>
         </Card>
       </Container>
-    </div>
+    </Page>
   );
 };
 export default Register;
