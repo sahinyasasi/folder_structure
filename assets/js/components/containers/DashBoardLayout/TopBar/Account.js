@@ -106,8 +106,10 @@ const Account = ({ mobileOpen }) => {
                         Buy A Car
                     </MenuItem>
                 </Hidden>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-
+                {/*<MenuItem onClick={handleLogout}>Logout</MenuItem>*/}
+                <MenuItem component={RouterLink} to="/login">
+                        Login
+                    </MenuItem>
             </Menu>
         </>
     );

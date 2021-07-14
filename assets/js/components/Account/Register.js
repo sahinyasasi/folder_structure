@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink } from "react-router-dom";
+
 import { validationService } from "../../services/validationService";
 import FormInput from "../layouts/FormInput";
-import Page from "../layouts/Page"
+import Page from "../layouts/Page";
 
 import CustomButton from "../layouts/CustomButton";
 import { userActions } from "../../actions";
@@ -13,13 +13,14 @@ import {
   CardContent,
   Container,
   Typography,
+  Link,
   makeStyles,
 } from "@material-ui/core";
 
 import Password from "../layouts/PassWord";
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
     minHeight: "100vh",
@@ -33,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "15%",
   },
   cardContainer: {
-    // paddingBottom: 40,
-    paddingTop: 20,
+    paddingBottom: 80,
+    paddingTop: 80,
   },
   cardContent: {
     padding: theme.spacing(4),
@@ -99,12 +100,12 @@ const Register = () => {
       <Container className={classes.cardContainer} maxWidth="sm">
         <Box mt={2} display="flex" justifyContent="center">
           <Typography color="textPrimary" gutterBottom variant="h5">
-            Register a new user
+            Create An Account
           </Typography>
         </Box>
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
-            <Box flexGrow={1} mt={2}>
+            <Box flexGrow={1}>
               <form onSubmit={handleSubmit} noValidate>
                 {["first_name", "last_name", "login_id", "email", "phone"].map(
                   (data) => {
@@ -143,6 +144,11 @@ const Register = () => {
                   />
                 </Box>
               </form>
+            </Box>
+            <Box mt={3}>
+              <Typography>
+                Already A Member <Link href="/login">Sign In</Link>
+              </Typography>
             </Box>
           </CardContent>
         </Card>
