@@ -86,8 +86,7 @@ const PostSellerDetails = () => {
   };
   const textStyle = (text) => {
     let title = text[0].toUpperCase() + text.slice(1).replace("_", " ");
-
-    return ` ${title}`;
+    return title.replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase());
   };
 
   const title = "Enter Seller Details and Notes";

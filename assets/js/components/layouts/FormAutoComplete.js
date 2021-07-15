@@ -2,17 +2,17 @@ import React from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 
-const FormAutoComplete = (props) => {
+const FormAutoComplete = ({ options, label, error, helperText, ...props }) => {
   return (
     <Autocomplete
-      options={props.options}
+      options={options}
       getOptionLabel={(option) => option.title}
       renderInput={(params) => (
         <TextField
           {...params}
-          label={props.label}
-          error={props.error}
-          helperText={props.helperText}
+          label={label}
+          error={error}
+          helperText={helperText}
           variant="outlined"
           required
         />

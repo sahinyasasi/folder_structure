@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { validationService } from "../../services/validationService";
 import FormInput from "../layouts/FormInput";
 import Page from "../layouts/Page";
-
+import getInitials from "../../utils/getInitials";
 import CustomButton from "../layouts/CustomButton";
 import { userActions } from "../../actions";
 import {
@@ -20,7 +20,7 @@ import {
 import Password from "../layouts/PassWord";
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
     display: "flex",
     flexDirection: "column",
     minHeight: "100vh",
@@ -91,8 +91,9 @@ const Register = () => {
       setRegisterDetails(validationResult.registerErrorVals);
     }
   };
-  const textStyle = (name) => {
-    return name[0].toUpperCase() + name.slice(1).replace("_", " ").trim();
+  const textStyle = (text) => {
+    let title = text[0].toUpperCase() + text.slice(1).replace("_", " ");
+    return title.replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase());
   };
 
   return (
@@ -147,7 +148,7 @@ const Register = () => {
             </Box>
             <Box mt={3}>
               <Typography>
-                Already A Member <Link href="/login">Sign In</Link>
+                Already A Member ? <Link href="/login"> Sign In</Link>
               </Typography>
             </Box>
           </CardContent>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   makeStyles,
   Container,
@@ -18,7 +19,7 @@ import { userActions } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
     display: "flex",
     flexDirection: "column",
     minHeight: "100vh",
@@ -47,6 +48,7 @@ const mandatoryText = "field cannot be empty";
 const Login = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const [loginDetails, setLoginDetails] = useState({
     email: valObj,
     password: valObj,
@@ -78,14 +80,14 @@ const Login = () => {
         ...Object.entries(loginDetails).map(([k, v]) => ({ [k]: v.value }))
       );
       console.log("(userObj)==========================userObj ", userObj);
-      dispatch(userActions.login({ user: userObj }, "/dashboard"));
+      dispatch(userActions.login({ ...userObj }, "/postad"));
     } else {
       console.log(" register failed Validation!!!!!!!!!!!!!");
       setLoginDetails(validationResult.loginErrorVals);
       console.log(validationResult.loginErrorVals);
     }
   };
-  console.log(loginDetails.email.value);
+
   return (
     <Page className={classes.root} title="Login">
       <Container className={classes.cardContainer} maxWidth="sm">

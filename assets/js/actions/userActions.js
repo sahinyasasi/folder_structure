@@ -5,35 +5,38 @@ import { history } from "../utils/history";
 
 export const userActions = {
   register,
+  login,
+  logout,
 };
 
 function register(userData, path) {
   return (dispatch) => {
     dispatch(request(userData));
 
-    userService
-      .register(userData)
-      .then((response) => {
-        if (response.status >= 200 && response.status <= 299) {
-          return response.json();
-        } else {
-          return Promise.reject(response);
-        }
-      })
-      .then((userData) => {
-        dispatch(success());
-        dispatch(setAlert("User Created Successfully", "success"));
-        console.log("register user success", userData);
-        history.push(path);
-      })
-      .catch((response) => {
-        dispatch(failure(response));
-        response.json().then((json) => {
-          let err = Object.keys(json.errors);
+    const submit = async () => {
+      try {
+        var response = "";
+        response = await userService.register(userData);
 
-          dispatch(setAlert(`${err} has already beeen taken`, "error"));
-        });
-      });
+        let user = response.data.data;
+
+        dispatch(success(user));
+        dispatch(loginSuccess(user));
+        console.log("Register User success", response.data.data.id);
+        history.push(path);
+      } catch (err) {
+        let data = err.response.data;
+        if (data.errors) {
+          dispatch(setAlert(`Password ${data.errors.password}`, "error"));
+        } else if (data.error) {
+          dispatch(setAlert(data.error, "error"));
+        }
+
+        dispatch(failure(err));
+      }
+    };
+
+    submit();
   };
 
   function request(user) {
@@ -50,9 +53,47 @@ function register(userData, path) {
   }
 }
 
-function addUserRegisterValidations(postAdValidationDetails) {
-  return {
-    type: postAdConstants.ADD_POSTAD_VALIDATIONS,
-    postAdValidationDetails,
+function login(loginDetails, path) {
+  return (dispatch) => {
+    dispatch(request({ loginDetails }));
+
+    const submit = async () => {
+      try {
+        var response = "";
+        response = await userService.login(loginDetails);
+
+        let user = response.data.data;
+        dispatch(success(user));
+        dispatch(setAlert(response.data.message, "success"));
+        localStorage.setItem("a2z_kars_user", JSON.stringify(user));
+
+        console.log("Login success", response.data.data.id);
+        history.push(path);
+      } catch (err) {
+        dispatch(failure(err));
+        let error = err.response.data.error;
+
+        dispatch(setAlert(error, "error"));
+      }
+    };
+
+    submit();
+
+    function request(user) {
+      return { type: userConstants.LOGIN_REQUEST, user };
+    }
+    function success(user) {
+      return { type: userConstants.LOGIN_SUCCESS, user };
+    }
+    function failure(error) {
+      return { type: userConstants.LOGIN_FAILURE, error };
+    }
   };
+}
+function logout() {
+  return (dispatch) => {
+    userService.logout();
+    dispatch(setAlert("You have been Logged Out Successfully", "success"));
+  };
+  return { type: userConstants.LOGOUT };
 }

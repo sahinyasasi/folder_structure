@@ -222,10 +222,6 @@ const PostCarDetails = () => {
     }
     dispatch(postAdActions.addVehicleKmDriven(vehicleDetails));
   };
-  const textStyle = (text) => {
-    let title = text[0].toUpperCase() + text.slice(1).replace("_", " ");
-    return title.replace(/([A-Z])/g, " $1").trim();
-  };
 
   const title = "Enter Car Details";
   return (

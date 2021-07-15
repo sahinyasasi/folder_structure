@@ -1,21 +1,35 @@
 import config from "config";
+import axios from "axios";
 
 export const userService = {
   register,
+  login,
+  logout,
 };
 
 function register(user) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
-  };
+  return axios.post(`http://localhost:4000/api/apps/1001/users/`, user, {
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+  });
+}
 
-  return fetch(`http://localhost:4000/api/apps/1001/users/`, requestOptions)
-    .then((handleResponse) => handleResponse)
-    .then((user) => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.setItem("slc_user", JSON.stringify(user));
-      return user;
-    });
+function login(loginDetails) {
+  return axios.post(
+    `http://localhost:4000/api/apps/1001/users/sign_in`,
+    loginDetails,
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+}
+function logout() {
+  // remove user from local storage to log user out
+  console.log("(fileName)========================== user service logout");
+  localStorage.removeItem("a2z_kars_user");
+  console.log(
+    "(user after logout )========================== user",
+    localStorage.getItem("a2z_kars_user")
+  );
 }
