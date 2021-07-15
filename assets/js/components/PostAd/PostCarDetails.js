@@ -6,6 +6,7 @@ import FormAutoComplete from "../layouts/FormAutoComplete";
 import GridItem from "../layouts/GridItem";
 import { postAdActions } from "../../actions";
 import { validationService } from "../../services/validationService";
+import { apiService } from "../../services/apiService";
 
 import {
   Card,
@@ -31,6 +32,8 @@ const valObj = { value: "", error: false, errorText: "" };
 const PostCarDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [brand, setBrand] = useState(null);
+  const [model, setModel] = useState(null);
   // const [formIsValid, setFormIsValid] = useState(true)
   const [carDetails, setCarDetails] = useState({
     type: "car",
@@ -55,10 +58,43 @@ const PostCarDetails = () => {
       newObj["value"] = item + "";
       return o.concat(newObj);
     }, []);
-  const getOptions = () => {
-    let optsArr = ["brand1", "brand2", "brand3"];
-    return arrayToObject(optsArr);
+
+  const getCarBrands = async () => {
+    try {
+      const response = await apiService.listCarBrands("car");
+
+      setCarAttr({
+        ...carAttr,
+        brands: arrayToObject(response.data.data),
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
+  const getCarModels = async (brand) => {
+    try {
+      const response = await apiService.listCarModels(brand);
+      setCarAttr({
+        ...carAttr,
+        models: arrayToObject(response.data.data),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const getCarVariants = async (brand, model) => {
+    try {
+      const response = await apiService.listCarVariants(brand, model);
+
+      setCarAttr({
+        ...carAttr,
+        variants: arrayToObject(response.data.data),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const getYears = () => {
     let presentYear = new Date().getFullYear();
     let years = Array(36)
@@ -102,9 +138,9 @@ const PostCarDetails = () => {
     return arrayToObject(noOfOwnersArr);
   };
   const [carAttr, setCarAttr] = useState({
-    brands: getOptions(),
-    models: getOptions(),
-    variants: getOptions(),
+    brands: [],
+    models: [],
+    variants: [],
     years: getYears(),
     conditions: getConditions(),
     fuelTypes: getFuelTypes(),
@@ -120,7 +156,19 @@ const PostCarDetails = () => {
       Math.random().toString(36).substr(3, 3);
     dispatch(postAdActions.addPostId(postId));
     dispatch(postAdActions.addVehicleType(carDetails.type));
+    getCarBrands();
   }, []);
+  useEffect(() => {
+    if (!brand) return;
+
+    getCarModels(brand);
+  }, [brand]);
+  useEffect(() => {
+    if (!brand && !model) return;
+
+    getCarVariants(brand, model);
+  }, [brand, model]);
+
   const handleChange = (key, data) => {
     let vehicleDetails = "";
     if (data) {
@@ -162,7 +210,8 @@ const PostCarDetails = () => {
 
   const handleBrandChange = (data) => {
     if (data && data.value) {
-      getCarModels(carDetails.type, data.value);
+      setBrand(data.value);
+      console.log(data.value);
     } else {
       setCarAttr({
         ...carAttr,
@@ -175,7 +224,8 @@ const PostCarDetails = () => {
 
   const handleModelChange = (data) => {
     if (data && data.value) {
-      getCarVariants(carDetails.type, carDetails.brand.value, data.value);
+      setBrand(carDetails.brand.value);
+      setModel(data.value);
     } else {
       setCarAttr({
         ...carAttr,
@@ -239,7 +289,7 @@ const PostCarDetails = () => {
                     id="brand"
                     options={carAttr.brands}
                     onChange={(event, data) => {
-                      handleChange("brand", data);
+                      handleBrandChange(data);
                     }}
                     error={
                       postAd.brand && postAd.brand.error
@@ -262,7 +312,7 @@ const PostCarDetails = () => {
                     label="Model"
                     options={carAttr.models}
                     onChange={(event, data) => {
-                      handleChange("model", data);
+                      handleModelChange(data);
                     }}
                     error={
                       postAd.model && postAd.model.error

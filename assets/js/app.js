@@ -29,12 +29,12 @@ const App = () => {
           <Route exact path="/register">
             <Register />
           </Route>
+          <Route exact path="/">
+            <Home />
+          </Route>
 
           <AuthGuard>
             <DashBoardLayout>
-              <Route exact path="/">
-                <Home />
-              </Route>
               <Route exact path="/postad">
                 <PostAd />
               </Route>

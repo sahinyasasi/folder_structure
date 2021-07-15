@@ -63,6 +63,7 @@ function login(loginDetails, path) {
         response = await userService.login(loginDetails);
 
         let user = response.data.data;
+        console.log(user, "user");
         dispatch(success(user));
         dispatch(setAlert(response.data.message, "success"));
         localStorage.setItem("a2z_kars_user", JSON.stringify(user));
