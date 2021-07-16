@@ -74,6 +74,7 @@ const PostCarDetails = () => {
   const getCarModels = async (brand) => {
     try {
       const response = await apiService.listCarModels(brand);
+
       setCarAttr({
         ...carAttr,
         models: arrayToObject(response.data.data),
@@ -163,8 +164,9 @@ const PostCarDetails = () => {
 
     getCarModels(brand);
   }, [brand]);
+
   useEffect(() => {
-    if (!brand && !model) return;
+    if (!model) return;
 
     getCarVariants(brand, model);
   }, [brand, model]);
@@ -211,7 +213,6 @@ const PostCarDetails = () => {
   const handleBrandChange = (data) => {
     if (data && data.value) {
       setBrand(data.value);
-      console.log(data.value);
     } else {
       setCarAttr({
         ...carAttr,
