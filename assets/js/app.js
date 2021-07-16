@@ -8,13 +8,13 @@ import { store } from "./utils/store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 const rootElement = document.getElementById("root");
 import Register from "./components/Account/Register";
-import Alert from "./components/Alert";
+import Alert from "./components/layouts/Alert";
 import "../css/app.css";
 import DashBoardLayout from "./components/containers/DashBoardLayout";
 import Login from "./components/Account/Login";
 
 import PostAd from "./components/PostAd";
-import Home from "./components/Home";
+
 import AuthGuard from "./utils/AutthGuard";
 
 const App = () => {
@@ -28,9 +28,6 @@ const App = () => {
           </Route>
           <Route exact path="/register">
             <Register />
-          </Route>
-          <Route exact path="/">
-            <Home />
           </Route>
 
           <AuthGuard>

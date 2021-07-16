@@ -1,53 +1,49 @@
-import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core";
 
-import TopBar from './TopBar';
+import TopBar from "../../layouts/TopBar";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+  root: {
+    display: "flex",
+    height: "100%",
+    overflow: "hidden",
+    width: "100%",
+  },
 
-        display: 'flex',
-        height: '100%',
-        overflow: 'hidden',
-        width: '100%'
+  wrapper: {
+    display: "flex",
+    flex: "1 1 auto",
+    overflow: "hidden",
+    paddingTop: 64,
+    [theme.breakpoints.up("lg")]: {
+      paddingLeft: 256,
     },
-
-    wrapper: {
-        display: 'flex',
-        flex: '1 1 auto',
-        overflow: 'hidden',
-        paddingTop: 64,
-        [theme.breakpoints.up('lg')]: {
-            paddingLeft: 256
-        }
-    },
-    contentContainer: {
-        display: 'flex',
-        flex: '1 1 auto',
-        overflow: 'hidden'
-    },
-    content: {
-        flex: '1 1 auto',
-        height: '100%',
-        overflow: 'auto'
-    }
-}))
+  },
+  contentContainer: {
+    display: "flex",
+    flex: "1 1 auto",
+    overflow: "hidden",
+  },
+  content: {
+    flex: "1 1 auto",
+    height: "100%",
+    overflow: "auto",
+  },
+}));
 
 const DashBoardLayout = ({ children }) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
-        <div className={classes.root}>
-            <TopBar />
-            <div className={classes.contentContainer}>
-                <div className={classes.content}>
-                    <div className={classes.content}>
-                        {children}
-                    </div>
-                </div>
-            </div>
-
+  return (
+    <div className={classes.root}>
+      <TopBar />
+      <div className={classes.contentContainer}>
+        <div className={classes.content}>
+          <div className={classes.content}>{children}</div>
         </div>
-    )
-}
-export default DashBoardLayout
+      </div>
+    </div>
+  );
+};
+export default DashBoardLayout;
