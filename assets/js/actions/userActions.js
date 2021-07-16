@@ -91,10 +91,15 @@ function login(loginDetails, path) {
     }
   };
 }
+
 function logout() {
   return (dispatch) => {
     userService.logout();
+    dispatch(userLogout());
+
     dispatch(setAlert("You have been Logged Out Successfully", "success"));
   };
-  return { type: userConstants.LOGOUT };
+  function userLogout() {
+    return { type: userConstants.LOGOUT };
+  }
 }
